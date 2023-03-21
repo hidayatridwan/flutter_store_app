@@ -1,4 +1,4 @@
-// import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_store_app/app_styles.dart';
@@ -19,56 +19,65 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // int _pageIndex = 0;
+  int _pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DetailPage(),
-      // home: Scaffold(
-        // body: const HomeScreen(),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        // floatingActionButton: Container(
-        //   height: 64,
-        //   padding: const EdgeInsets.symmetric(horizontal: 8),
-        //   child: CustomNavigationBar(
-        //     isFloating: true,
-        //     borderRadius: const Radius.circular(40),
-        //     selectedColor: kWhite,
-        //     unSelectedColor: kGrey,
-        //     backgroundColor: kBrown,
-        //     strokeColor: Colors.transparent,
-        //     scaleFactor: 0.1,
-        //     iconSize: 40,
-        //     items: [
-        //       CustomNavigationBarItem(
-        //           icon: _pageIndex == 0
-        //               ? SvgPicture.asset('assets/home_icon_selected.svg')
-        //               : SvgPicture.asset('assets/home_icon_unselected.svg')),
-        //       CustomNavigationBarItem(
-        //           icon: _pageIndex == 1
-        //               ? SvgPicture.asset('assets/cart_icon_selected.svg')
-        //               : SvgPicture.asset('assets/cart_icon_unselected.svg')),
-        //       CustomNavigationBarItem(
-        //           icon: _pageIndex == 2
-        //               ? SvgPicture.asset('assets/favorite_icon_selected.svg')
-        //               : SvgPicture.asset(
-        //                   'assets/favorite_icon_unselected.svg')),
-        //       CustomNavigationBarItem(
-        //           icon: _pageIndex == 3
-        //               ? SvgPicture.asset('assets/account_icon_selected.svg')
-        //               : SvgPicture.asset('assets/account_icon_unselected.svg')),
-        //     ],
-        //     currentIndex: _pageIndex,
-        //     onTap: (index) {
-        //       setState(() {
-        //         _pageIndex = index;
-        //       });
-        //     },
-        //   ),
-        // ),
-      // ),
+      home: Scaffold(
+        body: const HomeScreen(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Container(
+          height: 64,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: kWhite,
+                blurRadius: 50,
+                spreadRadius: 2,
+                offset: Offset(5, 5), // Shadow position
+              ),
+            ],
+          ),
+          child: CustomNavigationBar(
+            isFloating: true,
+            borderRadius: const Radius.circular(40),
+            selectedColor: kWhite,
+            unSelectedColor: kGrey,
+            backgroundColor: kBrown,
+            strokeColor: Colors.transparent,
+            scaleFactor: 0.1,
+            iconSize: 40,
+            items: [
+              CustomNavigationBarItem(
+                  icon: _pageIndex == 0
+                      ? SvgPicture.asset('assets/home_icon_selected.svg')
+                      : SvgPicture.asset('assets/home_icon_unselected.svg')),
+              CustomNavigationBarItem(
+                  icon: _pageIndex == 1
+                      ? SvgPicture.asset('assets/cart_icon_selected.svg')
+                      : SvgPicture.asset('assets/cart_icon_unselected.svg')),
+              CustomNavigationBarItem(
+                  icon: _pageIndex == 2
+                      ? SvgPicture.asset('assets/favorite_icon_selected.svg')
+                      : SvgPicture.asset(
+                          'assets/favorite_icon_unselected.svg')),
+              CustomNavigationBarItem(
+                  icon: _pageIndex == 3
+                      ? SvgPicture.asset('assets/account_icon_selected.svg')
+                      : SvgPicture.asset('assets/account_icon_unselected.svg')),
+            ],
+            currentIndex: _pageIndex,
+            onTap: (index) {
+              setState(() {
+                _pageIndex = index;
+              });
+            },
+          ),
+        ),
+      ),
     );
   }
 }
@@ -248,83 +257,92 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSpacing: 20,
           padding: const EdgeInsets.symmetric(horizontal: kPaddingHorizontal),
           itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Positioned(
-                        child: ClipRRect(
-                      borderRadius: BorderRadius.circular(kBorderRadius),
-                      child: Image.asset(
-                        'assets/images/${images[index]}',
-                        fit: BoxFit.cover,
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DetailPage(),
+                    ));
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      Positioned(
+                          child: ClipRRect(
+                        borderRadius: BorderRadius.circular(kBorderRadius),
+                        child: Image.asset(
+                          'assets/images/${images[index]}',
+                          fit: BoxFit.cover,
+                        ),
+                      )),
+                      Positioned(
+                          top: 8,
+                          right: 8,
+                          child: GestureDetector(
+                            child: SvgPicture.asset(
+                                'assets/favorite_cloth_icon_unselected.svg'),
+                          ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    'Modern light clothes',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: kEncodeSansSemiBold.copyWith(
+                        color: kDarkBrown,
+                        fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
+                  ),
+                  Text(
+                    'Dress modern',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: kEncodeSansRegular.copyWith(
+                        color: kGrey,
+                        fontSize: SizeConfig.blocSizeHorizontal! * 2.5),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        '\$200.00',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: kEncodeSansSemiBold.copyWith(
+                            color: kDarkBrown,
+                            fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
                       ),
-                    )),
-                    Positioned(
-                        top: 8,
-                        right: 8,
-                        child: GestureDetector(
-                          child: SvgPicture.asset(
-                              'assets/favorite_cloth_icon_unselected.svg'),
-                        ))
-                  ],
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  'Modern light clothes',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: kEncodeSansSemiBold.copyWith(
-                      color: kDarkBrown,
-                      fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
-                ),
-                Text(
-                  'Dress modern',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: kEncodeSansRegular.copyWith(
-                      color: kGrey,
-                      fontSize: SizeConfig.blocSizeHorizontal! * 2.5),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      '\$200.00',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: kEncodeSansSemiBold.copyWith(
-                          color: kDarkBrown,
-                          fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: kYellow,
-                          size: 16,
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          '5.0',
-                          style: kEncodeSansRegular.copyWith(
-                              color: kDarkBrown,
-                              fontSize: SizeConfig.blocSizeHorizontal! * 3),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ],
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: kYellow,
+                            size: 16,
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            '5.0',
+                            style: kEncodeSansRegular.copyWith(
+                                color: kDarkBrown,
+                                fontSize: SizeConfig.blocSizeHorizontal! * 3),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
             );
           },
         )

@@ -19,6 +19,55 @@ class _DetailPageState extends State<DetailPage> {
     SizeConfig().init(context);
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: GestureDetector(
+        onTap: () {},
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          height: 60,
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: kPaddingHorizontal),
+          decoration: BoxDecoration(
+            color: kDarkBrown,
+            borderRadius: BorderRadius.circular(40),
+            boxShadow: const [
+              BoxShadow(
+                color: kWhite,
+                blurRadius: 50,
+                spreadRadius: 2,
+                offset: Offset(5, 5), // Shadow position
+              )
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset('assets/shopping_cart_icon.svg'),
+              SizedBox(
+                width: SizeConfig.blocSizeHorizontal! * 3,
+              ),
+              RichText(
+                  text: TextSpan(
+                      text: 'Add to cart | \$100.89',
+                      style: kEncodeSansSemiBold.copyWith(
+                          color: kWhite,
+                          fontSize: SizeConfig.blocSizeHorizontal! * 4),
+                      children: [
+                    TextSpan(
+                      text: ' \$200.00',
+                      style: kEncodeSansRegular.copyWith(
+                          color: kWhite,
+                          fontSize: SizeConfig.blocSizeHorizontal! * 3,
+                          decoration: TextDecoration.lineThrough,
+                          decorationThickness:
+                              SizeConfig.blocSizeHorizontal! * 1,
+                          decorationColor: kWhite),
+                    )
+                  ]))
+            ],
+          ),
+        ),
+      ),
       body: SafeArea(
           child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: kPaddingHorizontal),
@@ -44,22 +93,27 @@ class _DetailPageState extends State<DetailPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: SizeConfig.blocSizeVertical! * 10,
-                            height: SizeConfig.blocSizeHorizontal! * 10,
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: kWhite,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: kBrown.withOpacity(0.11),
-                                      spreadRadius: 0.0,
-                                      blurRadius: 12,
-                                      offset: const Offset(0, 5))
-                                ]),
-                            child:
-                                SvgPicture.asset('assets/arrow_back_icon.svg'),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              width: SizeConfig.blocSizeVertical! * 10,
+                              height: SizeConfig.blocSizeHorizontal! * 10,
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: kWhite,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: kBrown.withOpacity(0.11),
+                                        spreadRadius: 0.0,
+                                        blurRadius: 12,
+                                        offset: const Offset(0, 5))
+                                  ]),
+                              child: SvgPicture.asset(
+                                  'assets/arrow_back_icon.svg'),
+                            ),
                           ),
                           Container(
                             width: SizeConfig.blocSizeVertical! * 10,
@@ -219,8 +273,10 @@ class _DetailPageState extends State<DetailPage> {
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Choose size',
@@ -245,9 +301,13 @@ class _DetailPageState extends State<DetailPage> {
                               'S',
                               style: kEncodeSansRegular.copyWith(
                                   color: kDarkBrown,
-                                  fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
+                                  fontSize:
+                                      SizeConfig.blocSizeHorizontal! * 3.5),
                             ),
                           ),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.blocSizeHorizontal! * 1,
                         ),
                         Container(
                           width: SizeConfig.blocSizeHorizontal! * 9,
@@ -261,25 +321,33 @@ class _DetailPageState extends State<DetailPage> {
                               'M',
                               style: kEncodeSansRegular.copyWith(
                                   color: kDarkBrown,
-                                  fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
+                                  fontSize:
+                                      SizeConfig.blocSizeHorizontal! * 3.5),
                             ),
                           ),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.blocSizeHorizontal! * 1,
                         ),
                         Container(
                           width: SizeConfig.blocSizeHorizontal! * 9,
                           height: SizeConfig.blocSizeHorizontal! * 9,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: kWhite,
+                              color: kDarkBrown,
                               border: Border.all(width: 1, color: kLightGrey)),
                           child: Center(
                             child: Text(
                               'L',
-                              style: kEncodeSansRegular.copyWith(
-                                  color: kDarkBrown,
-                                  fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
+                              style: kEncodeSansBold.copyWith(
+                                  color: kWhite,
+                                  fontSize:
+                                      SizeConfig.blocSizeHorizontal! * 3.5),
                             ),
                           ),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.blocSizeHorizontal! * 1,
                         ),
                         Container(
                           width: SizeConfig.blocSizeHorizontal! * 9,
@@ -293,16 +361,68 @@ class _DetailPageState extends State<DetailPage> {
                               'XL',
                               style: kEncodeSansRegular.copyWith(
                                   color: kDarkBrown,
-                                  fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
+                                  fontSize:
+                                      SizeConfig.blocSizeHorizontal! * 3.5),
                             ),
                           ),
                         )
                       ],
                     )
                   ],
-                )
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Choose color',
+                      style: kEncodeSansBold.copyWith(
+                          color: kDarkBrown,
+                          fontSize: SizeConfig.blocSizeHorizontal! * 3.5),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: SizeConfig.blocSizeHorizontal! * 9,
+                          height: SizeConfig.blocSizeHorizontal! * 9,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: kLightGrey,
+                              border: Border.all(width: 1, color: kLightGrey)),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.blocSizeHorizontal! * 1,
+                        ),
+                        Container(
+                          width: SizeConfig.blocSizeHorizontal! * 9,
+                          height: SizeConfig.blocSizeHorizontal! * 9,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: kBrown,
+                              border: Border.all(width: 1, color: kLightGrey)),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.blocSizeHorizontal! * 1,
+                        ),
+                        Container(
+                          width: SizeConfig.blocSizeHorizontal! * 9,
+                          height: SizeConfig.blocSizeHorizontal! * 9,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: kDarkBrown,
+                              border: Border.all(width: 1, color: kLightGrey)),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ],
-            )
+            ),
+            const SizedBox(
+              height: 100,
+            ),
           ],
         ),
       )),
